@@ -1,0 +1,16 @@
+
+.navbar-nav>.tasks-menu>.dropdown-menu>li .menu>li>a:hover {
+    background: #63b5e4 !important;
+    text-decoration: none;
+}
+@media (max-width: 767px){
+    .skin-blue .main-header .navbar .dropdown-menu li a{
+        color: #1a2226 !important;
+    }
+}
+@media (max-width: 991px)
+{
+    .skin-blue .main-header .navbar .dropdown-menu li a{
+        background-color: #f4f4f4
+    }
+}
