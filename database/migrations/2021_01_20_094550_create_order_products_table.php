@@ -18,18 +18,18 @@ class CreateOrderProductsTable extends Migration
             $table->increments('id');
             $table->integer('order_id')->unsigned();
             $table->integer('product_id')->unsigned();
-            $table->float('price');
+            $table->float('price')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
-
-        Schema::table('order_products', function (Blueprint $table) {
-            $table->foreign('order_id')->on('orders')->references('id')
-                ->onDelete('cascade')->onUpdate('cascade');
-
-            $table->foreign('product_id')->on('products')->references('id')
-                ->onDelete('cascade')->onUpdate('cascade');
-        });
+//
+//        Schema::table('order_products', function (Blueprint $table) {
+//            $table->foreign('order_id')->on('orders')->references('id')
+//                ->onDelete('cascade')->onUpdate('cascade');
+//
+//            $table->foreign('product_id')->on('products')->references('id')
+//                ->onDelete('cascade')->onUpdate('cascade');
+//        });
     }
 
     /**

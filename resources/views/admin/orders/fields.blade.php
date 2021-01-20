@@ -1,7 +1,7 @@
 <!-- User Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('user_id', 'User Id:') !!}
-    {!! Form::number('user_id', null, ['class' => 'form-control']) !!}
+    {!! Form::select('user_id',\App\User::pluck('name','id') ,null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Order Number Field -->
@@ -19,13 +19,14 @@
 <!-- Address Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('address_id', 'Address Id:') !!}
-    {!! Form::number('address_id', null, ['class' => 'form-control']) !!}
+    {!! Form::select('address_id', \App\Models\Address::pluck('phone','id') ,null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Status Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('status', 'Status:') !!}
-    {!! Form::text('status', null, ['class' => 'form-control']) !!}
+    {!! Form::select('status',['waiting'=>'waiting','preparing'=>'preparing','wait_delivery'=>'wait_delivery'
+,'delivering'=>'delivering','complected'=>'complected'],null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Submit Field -->

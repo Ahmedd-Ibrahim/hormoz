@@ -19,7 +19,7 @@ class UserDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', 'users.datatables_actions');
+        return $dataTable->addColumn('action', 'admin.users.datatables_actions');
     }
 
     /**
@@ -69,6 +69,7 @@ class UserDataTable extends DataTable
             'name' =>  new Column(['title' => __('users.name:'), 'data' => 'name']),
             'phone' =>  new Column(['title' => __('users.phone:'), 'data' => 'phone']),
             'role' =>  new Column(['title' => __('users.role:'), 'data' => 'role', 'searchable' => true]),
+            'email' =>  new Column(['title' => __('users.email:'), 'data' => 'email', 'searchable' => true]),
             'created_at' => new Column(['title' => __('users.created_at:'), 'data' => 'created_at', 'searchable' => false]),
             'updated_at' => new Column(['title' => __('users.updated_at:'), 'data' => 'updated_at', 'searchable' => false])
         ];

@@ -42,7 +42,7 @@ class Vendor extends Model
         'user_id',
         'email',
         'name',
-        'offcial_name',
+        'official_name',
         'phone',
         'address',
         'Legal_papers',
@@ -67,7 +67,7 @@ class Vendor extends Model
         'user_id' => 'integer',
         'email' => 'string',
         'name' => 'string',
-        'offcial_name' => 'string',
+        'official_name' => 'string',
         'phone' => 'string',
         'address' => 'string',
         'Legal_papers' => 'string',
@@ -88,7 +88,22 @@ class Vendor extends Model
      * @var array
      */
     public static $rules = [
-
+        'user_id' => 'required',
+        'email'  => 'required',
+        'name' => 'required',
+        'official_name' => 'required',
+        'phone' => 'sometimes',
+        'address' => 'sometimes',
+        'Legal_papers' => 'sometimes',
+        'is_active' => 'sometimes',
+        'available' => 'sometimes',
+        'holding' => 'sometimes',
+        'total' => 'sometimes',
+        'owner_name' => 'sometimes',
+        'bank_name' => 'sometimes',
+        'branch_name' => 'sometimes',
+        'account_id' => 'sometimes',
+        'iban' => 'sometimes'
     ];
 
     public function User()

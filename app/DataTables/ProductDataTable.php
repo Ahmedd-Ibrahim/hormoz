@@ -74,7 +74,6 @@ class ProductDataTable extends DataTable
             'description',
             'stock',
             'regular_price',
-            'is_sale',
             'sale_percent',
             'sale_expire_date',
             'catching_word',

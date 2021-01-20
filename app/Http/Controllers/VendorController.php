@@ -97,7 +97,7 @@ class VendorController extends AppBaseController
             return redirect(route('vendors.index'));
         }
 
-        return view('admin.admin.vendors.edit')->with('vendor', $vendor);
+        return view('admin.vendors.edit')->with('vendor', $vendor);
     }
 
     /**

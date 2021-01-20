@@ -1,7 +1,7 @@
 <!-- User Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('user_id', 'User Id:') !!}
-    {!! Form::number('user_id', null, ['class' => 'form-control']) !!}
+    {!! Form::select('user_id',\App\User::pluck('name','id') ,null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Email Field -->
@@ -18,8 +18,8 @@
 
 <!-- Offcial Name Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('offcial_name', 'Offcial Name:') !!}
-    {!! Form::text('offcial_name', null, ['class' => 'form-control']) !!}
+    {!! Form::label('official_name', 'official Name:') !!}
+    {!! Form::text('official_name', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Phone Field -->
@@ -43,7 +43,7 @@
 <!-- Is Active Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('is_active', 'Is Active:') !!}
-    {!! Form::text('is_active', null, ['class' => 'form-control']) !!}
+    {!! Form::select('is_active',['true'=>'true','false'=>'false'] ,null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Available Field -->

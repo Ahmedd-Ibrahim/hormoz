@@ -1,20 +1,10 @@
 <li class="{{ Request::is('*users*') ? 'active' : '' }}">
     <a href="{{ route('users.index') }}"><i class="fa fa-edit"></i><span>@lang('menu.Users')</span></a>
 </li>
+
+
 <li class="{{ Request::is('*credits*') ? 'active' : '' }}">
     <a href="{{ route('credits.index') }}"><i class="fa fa-edit"></i><span>Credits</span></a>
-</li>
-
-<li class="{{ Request::is('*addresses*') ? 'active' : '' }}">
-    <a href="{{ route('addresses.index') }}"><i class="fa fa-edit"></i><span>Addresses</span></a>
-</li>
-
-<li class="{{ Request::is('*vendors*') ? 'active' : '' }}">
-    <a href="{{ route('vendors.index') }}"><i class="fa fa-edit"></i><span>Vendors</span></a>
-</li>
-
-<li class="{{ Request::is('*product*') ? 'active' : '' }}">
-    <a href="{{ route('products.index') }}"><i class="fa fa-edit"></i><span>Products</span></a>
 </li>
 
 
@@ -26,6 +16,21 @@
 <li class="{{ Request::is('*subCategories*') ? 'active' : '' }}">
     <a href="{{ route('subCategories.index') }}"><i class="fa fa-edit"></i><span>Sub Categories</span></a>
 </li>
+
+<li class="{{ Request::is('*vendors*') ? 'active' : '' }}">
+    <a href="{{ route('vendors.index') }}"><i class="fa fa-edit"></i><span>Vendors</span></a>
+</li>
+
+<li class="{{ Request::is('*addresses*') ? 'active' : '' }}">
+    <a href="{{ route('addresses.index') }}"><i class="fa fa-edit"></i><span>Addresses</span></a>
+</li>
+
+
+
+<li class="{{ Request::is('*product*') ? 'active' : '' }}">
+    <a href="{{ route('products.index') }}"><i class="fa fa-edit"></i><span>Products</span></a>
+</li>
+
 
 
 <li class="{{ Request::is('*galleries*') ? 'active' : '' }}">

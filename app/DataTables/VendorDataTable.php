@@ -18,7 +18,7 @@ class VendorDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', 'vendors.datatables_actions');
+        return $dataTable->addColumn('action', 'admin.vendors.datatables_actions');
     }
 
     /**
@@ -68,7 +68,7 @@ class VendorDataTable extends DataTable
             'user_id',
             'email',
             'name',
-            'offcial_name',
+            'official_name',
             'phone',
             'address',
             'Legal_papers',

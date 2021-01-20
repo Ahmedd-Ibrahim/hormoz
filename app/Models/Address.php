@@ -70,6 +70,16 @@ class Address extends Model
      */
     public static $rules = [
 
+        'user_id' => 'required',
+        'first_name' => 'required',
+        'last_name' => 'required',
+        'city' => 'required',
+        'street' => 'required',
+        'building_number' => 'required',
+        'apartment_number' => 'required',
+        'phone' => 'required',
+        'type' => 'required',
+        'description' => 'sometimes'
     ];
 
     public function User()

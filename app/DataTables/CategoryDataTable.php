@@ -18,7 +18,7 @@ class CategoryDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', 'categories.datatables_actions');
+        return $dataTable->addColumn('action', 'admin.categories.datatables_actions');
     }
 
     /**

@@ -16,25 +16,29 @@ class CreateVendorsTable extends Migration
     {
         Schema::create('vendors', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
+            $table->integer('user_id')->unsigned();
             $table->text('email');
             $table->text('name');
-            $table->text('offcial_name');
-            $table->text('phone');
-            $table->text('address');
-            $table->text('Legal_papers');
-            $table->text('is_active');
-            $table->float('available');
-            $table->float('holding');
-            $table->float('total');
-            $table->text('owner_name');
-            $table->text('bank_name');
-            $table->text('branch_name');
-            $table->integer('account_id');
-            $table->text('iban');
+            $table->text('official_name')->nullable();
+            $table->text('phone')->nullable();
+            $table->text('address')->nullable();
+            $table->text('Legal_papers')->nullable();
+            $table->enum('is_active',['true','false'])->default('false')->nullable();
+            $table->float('available')->nullable();
+            $table->float('holding')->nullable();
+            $table->float('total')->nullable();
+            $table->text('owner_name')->nullable();
+            $table->text('bank_name')->nullable();
+            $table->text('branch_name')->nullable();
+            $table->integer('account_id')->nullable();
+            $table->text('iban')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
+//        Schema::table('vendors', function (Blueprint $table) {
+//            $table->foreign('user_id')->on('users')->references('id')
+//                ->onDelete('cascade')->onUpdate('cascade');
+//        });
     }
 
     /**

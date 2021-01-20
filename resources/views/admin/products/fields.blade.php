@@ -1,7 +1,7 @@
 <!-- Vendor Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('vendor_id', 'Vendor Id:') !!}
-    {!! Form::text('vendor_id', null, ['class' => 'form-control']) !!}
+    {!! Form::select('vendor_id', \App\Models\Vendor::pluck('name','id'),null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Name Field -->
@@ -13,19 +13,25 @@
 <!-- Category Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('category_id', 'Category Id:') !!}
-    {!! Form::text('category_id', null, ['class' => 'form-control']) !!}
+    {!! Form::select('category_id', \App\Models\Category::pluck('name','id') ,null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Maxmim Stock For Client Field -->
+<!-- Category Id Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('maxmim_stock_for_client', 'Maxmim Stock For Client:') !!}
-    {!! Form::text('maxmim_stock_for_client', null, ['class' => 'form-control']) !!}
+    {!! Form::label('sub_category_id', 'sub category Id:') !!}
+    {!! Form::select('sub_category_id', \App\Models\SubCategory::pluck('name','id') ,null, ['class' => 'form-control']) !!}
+</div>
+
+<!-- Maximum Stock For Client Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('maximum_stock_for_client', 'Maximum Stock For Client:') !!}
+    {!! Form::number('maximum_stock_for_client', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Weight Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('weight', 'Weight:') !!}
-    {!! Form::text('weight', null, ['class' => 'form-control']) !!}
+    {!! Form::number('weight', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Sku Field -->
@@ -46,22 +52,17 @@
     {!! Form::number('stock', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Regluar Price Field -->
+<!-- Regular Price Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('regluar_price', 'Regluar Price:') !!}
-    {!! Form::number('regluar_price', null, ['class' => 'form-control']) !!}
+    {!! Form::label('regular_price', 'Regular Price:') !!}
+    {!! Form::number('regular_price', null, ['class' => 'form-control']) !!}
 </div>
 
-<!-- Is Sale Field -->
-<div class="form-group col-sm-6">
-    {!! Form::label('is_sale', 'Is Sale:') !!}
-    {!! Form::number('is_sale', null, ['class' => 'form-control']) !!}
-</div>
 
-<!-- Sale Precent Field -->
+<!-- Sale Percent Field -->
 <div class="form-group col-sm-6">
-    {!! Form::label('sale_precent', 'Sale Precent:') !!}
-    {!! Form::number('sale_precent', null, ['class' => 'form-control']) !!}
+    {!! Form::label('sale_percent', 'Sale Percent:') !!}
+    {!! Form::number('sale_percent', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Sale Expire Date Field -->
@@ -95,7 +96,7 @@
 <!-- Status Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('status', 'Status:') !!}
-    {!! Form::text('status', null, ['class' => 'form-control']) !!}
+    {!! Form::select('status',['active'=>'active','deactivate'=>'deactivate'] ,null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Brand Field -->

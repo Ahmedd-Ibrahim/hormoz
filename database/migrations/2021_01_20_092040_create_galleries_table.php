@@ -23,10 +23,10 @@ class CreateGalleriesTable extends Migration
             $table->softDeletes();
         });
 
-        Schema::table('galleries', function (Blueprint $table) {
-            $table->foreign('product_id')->on('products')->references('id')
-                ->onUpdate('cascade')->onDelete('cascade');
-        });
+//        Schema::table('galleries', function (Blueprint $table) {
+//            $table->foreign('product_id')->on('products')->references('id')
+//                ->onUpdate('cascade')->onDelete('cascade');
+//        });
     }
 
     /**

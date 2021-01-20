@@ -58,15 +58,9 @@
     <p>{{ $product->regluar_price }}</p>
 </div>
 
-<!-- Is Sale Field -->
+<!-- Sale Percent Field -->
 <div class="form-group">
-    {!! Form::label('is_sale', 'Is Sale:') !!}
-    <p>{{ $product->is_sale }}</p>
-</div>
-
-<!-- Sale Precent Field -->
-<div class="form-group">
-    {!! Form::label('sale_precent', 'Sale Precent:') !!}
+    {!! Form::label('sale_percent', 'Sale Percent:') !!}
     <p>{{ $product->sale_precent }}</p>
 </div>
 

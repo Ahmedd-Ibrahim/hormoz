@@ -55,7 +55,11 @@ class Credit extends Model
      * @var array
      */
     public static $rules = [
-
+        'user_id'=>'required',
+        'name'=>'required',
+        'number'=>'required',
+        'expire_date'=>'required',
+        'cvv'=>'required'
     ];
 
 

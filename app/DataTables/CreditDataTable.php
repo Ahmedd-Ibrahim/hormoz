@@ -18,7 +18,7 @@ class CreditDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', 'credits.datatables_actions');
+        return $dataTable->addColumn('action', 'admin.credits.datatables_actions');
     }
 
     /**

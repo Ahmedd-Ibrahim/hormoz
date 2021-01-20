@@ -19,7 +19,7 @@ class Gallery extends Model
     use SoftDeletes;
 
     public $table = 'galleries';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -49,8 +49,10 @@ class Gallery extends Model
      * @var array
      */
     public static $rules = [
-        
+        'image' => 'required',
+        'is_primary' => 'required',
+        'product_id' => 'required'
     ];
 
-    
+
 }

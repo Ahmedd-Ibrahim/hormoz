@@ -19,7 +19,7 @@ class OrderProduct extends Model
     use SoftDeletes;
 
     public $table = 'order_products';
-    
+
 
     protected $dates = ['deleted_at'];
 
@@ -49,8 +49,10 @@ class OrderProduct extends Model
      * @var array
      */
     public static $rules = [
-        
+        'order_id' => 'required',
+        'product_id' => 'required',
+        'price'=> 'sometimes'
     ];
 
-    
+
 }

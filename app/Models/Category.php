@@ -43,7 +43,7 @@ class Category extends Model
      * @var array
      */
     public static $rules = [
-
+        'name' => 'required'
     ];
 
     public function Products()

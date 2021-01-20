@@ -25,15 +25,15 @@ class CreateAddressesTable extends Migration
             $table->integer('apartment_number');
             $table->text('phone');
             $table->text('type');
-            $table->longText('description');
+            $table->longText('description')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
 
-        Schema::table('addresses', function (Blueprint $table) {
-            $table->foreign('user_id')->on('users')
-                ->references('id')->onDelete('cascade')->onUpdate('cascade');
-        });
+//        Schema::table('addresses', function (Blueprint $table) {
+//            $table->foreign('user_id')->on('users')
+//                ->references('id')->onDelete('cascade')->onUpdate('cascade');
+//        });
     }
 
     /**

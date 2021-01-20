@@ -21,10 +21,11 @@ class CreateSubCategoriesTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-        Schema::table('sub_categories', function (Blueprint $table) {
-            $table->foreign('category_id')->on('categories')
-                ->references('id')->onUpdate('cascade')->onDelete('cascade');
-        });
+//
+//        Schema::table('sub_categories', function (Blueprint $table) {
+//            $table->foreign('category_id')->on('categories')
+//                ->references('id')->onUpdate('cascade')->onDelete('cascade');
+//        });
     }
 
     /**

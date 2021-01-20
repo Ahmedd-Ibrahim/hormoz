@@ -1,13 +1,13 @@
 <!-- Product Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('product_id', 'Product Id:') !!}
-    {!! Form::number('product_id', null, ['class' => 'form-control']) !!}
+    {!! Form::select('product_id',\App\Models\Product::pluck('name','id') ,null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- User Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('user_id', 'User Id:') !!}
-    {!! Form::number('user_id', null, ['class' => 'form-control']) !!}
+    {!! Form::select('user_id', \App\User::pluck('name','id'),null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Submit Field -->

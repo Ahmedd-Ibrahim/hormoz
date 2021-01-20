@@ -18,7 +18,7 @@ class UserProductDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', 'user_products.datatables_actions');
+        return $dataTable->addColumn('action', 'admin.user_products.datatables_actions');
     }
 
     /**

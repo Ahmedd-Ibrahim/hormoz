@@ -26,7 +26,7 @@
 <!-- Role Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('role', 'Role:') !!}
-    {!! Form::select('role', ['user'=>'user','moderator'=>'moderator','admin'=>'admin'],null, ['class' => 'form-control']) !!}
+    {!! Form::select('role', ['user'=>'user','seller'=>'seller','admin'=>'admin'],null, ['class' => 'form-control']) !!}
 </div>
 
 

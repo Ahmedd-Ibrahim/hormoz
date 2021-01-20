@@ -55,7 +55,11 @@ class Order extends Model
      * @var array
      */
     public static $rules = [
-
+        'user_id' => 'required',
+        'order_number' => 'required',
+        'total' => 'required',
+        'address_id' => 'required',
+        'status' => 'required'
     ];
 
     public function User()

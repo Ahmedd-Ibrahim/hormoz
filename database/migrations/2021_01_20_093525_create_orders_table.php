@@ -20,17 +20,17 @@ class CreateOrdersTable extends Migration
             $table->integer('address_id')->unsigned();
             $table->integer('order_number');
             $table->float('total');
-            $table->text('status');
+            $table->enum('status',['waiting','preparing','wait_delivery','delivering','complected']);
             $table->timestamps();
             $table->softDeletes();
         });
-        Schema::table('orders', function (Blueprint $table) {
-            $table->foreign('user_id')->on('users')->references('id')
-                ->onUpdate('cascade')->onDelete('cascade');
-
-            $table->foreign('address_id')->on('addresses')->references('id')
-                ->onUpdate('cascade')->onDelete('cascade');
-        });
+//        Schema::table('orders', function (Blueprint $table) {
+//            $table->foreign('user_id')->on('users')->references('id')
+//                ->onUpdate('cascade')->onDelete('cascade');
+//
+//            $table->foreign('address_id')->on('addresses')->references('id')
+//                ->onUpdate('cascade')->onDelete('cascade');
+//        });
     }
 
     /**

@@ -1,13 +1,13 @@
 <!-- Order Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('order_id', 'Order Id:') !!}
-    {!! Form::number('order_id', null, ['class' => 'form-control']) !!}
+    {!! Form::select('order_id', \App\Models\Order::pluck('order_number','id'),null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Product Id Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('product_id', 'Product Id:') !!}
-    {!! Form::number('product_id', null, ['class' => 'form-control']) !!}
+    {!! Form::select('product_id', \App\Models\Product::pluck('name','id'),null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Price Field -->

@@ -24,9 +24,9 @@ class CreateCreditsTable extends Migration
             $table->timestamps();
             $table->softDeletes();
         });
-        Schema::table('credits', function (Blueprint $table) {
-            $table->foreign('user_id')->on('users')->references('id')->onUpdate('cascade')->onDelete('cascade');
-        });
+//        Schema::table('credits', function (Blueprint $table) {
+//            $table->foreign('user_id')->on('users')->references('id')->onUpdate('cascade')->onDelete('cascade');
+//        });
     }
 
     /**

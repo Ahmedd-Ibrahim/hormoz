@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Eloquent as Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use phpDocumentor\Reflection\Types\Integer;
 
 /**
  * Class Product
@@ -42,13 +43,13 @@ class Product extends Model
         'vendor_id',
         'name',
         'category_id',
+        'sub_category_id',
         'maximum_stock_for_client',
         'weight',
         'sku',
         'description',
         'stock',
         'regular_price',
-        'is_sale',
         'sale_percent',
         'sale_expire_date',
         'catching_word',
@@ -67,12 +68,11 @@ class Product extends Model
         'vendor_id' => 'integer',
         'name' => 'string',
         'category_id' => 'integer',
-        'maxmim_stock_for_client' => 'integer',
+        'maximum_stock_for_client' => 'integer',
         'weight' => 'float',
         'sku' => 'string',
         'stock' => 'integer',
-        'regluar_price' => 'float',
-        'is_sale' => 'integer',
+        'regular_price' => 'float',
         'sale_percent' => 'float',
         'sale_expire_date' => 'date',
         'catching_word' => 'string',
@@ -87,7 +87,22 @@ class Product extends Model
      * @var array
      */
     public static $rules = [
-
+        'vendor_id' => 'required',
+        'name' => 'required',
+        'category_id' => 'required|integer',
+        'sub_category_id' => 'required|integer',
+        'maximum_stock_for_client' => 'required|integer',
+        'weight' => 'required|integer',
+        'sku' => 'required',
+        'description' => 'required',
+        'stock' => 'required',
+        'regular_price' => 'required',
+        'sale_percent' => 'required',
+        'sale_expire_date' => 'required|date',
+        'catching_word' => 'required',
+        'code' => 'required',
+        'status' => 'required',
+        'brand' => 'required'
     ];
 
     public function Vendor()
@@ -98,6 +113,10 @@ class Product extends Model
     public function Category()
     {
         return $this->belongsTo(Category::class,'category_id');
+    }
+    public function SubCategory()
+    {
+        return $this->belongsTo(SubCategory::class,'sub_category_id');
     }
 
     public function Users()

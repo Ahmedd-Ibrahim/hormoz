@@ -39,7 +39,7 @@ class AddressController extends AppBaseController
      */
     public function create()
     {
-        return view('addresses.create');
+        return view('admin.addresses.create');
     }
 
     /**
