@@ -37,7 +37,7 @@
 <!-- Legal Papers Field -->
 <div class="form-group col-sm-6">
     {!! Form::label('Legal_papers', 'Legal Papers:') !!}
-    {!! Form::text('Legal_papers', null, ['class' => 'form-control']) !!}
+    {!! Form::file('Legal_papers', null, ['class' => 'form-control']) !!}
 </div>
 
 <!-- Is Active Field -->

@@ -54,15 +54,15 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
-        'store' => [
+        'vendor' => [
             'driver' => 'local',
-            'root' => public_path('/images/store'),
+            'root' => public_path('images/vendor'),
             'visibility' => 'public',
         ],
 
-    'meet_type' => [
+        'products' => [
             'driver' => 'local',
-            'root' => public_path('/images/meet_type'),
+            'root' => public_path('images/products'),
             'visibility' => 'public',
         ],
 

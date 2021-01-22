@@ -52,4 +52,58 @@ class VendorRepository extends BaseRepository
     {
         return Vendor::class;
     }
+
+    public function create($input)
+    {
+
+        if(isset($input['Legal_papers']) && is_file($input['Legal_papers']))
+        {
+          $paper =  UploadImage('vendor',$input['Legal_papers']);
+            $input['Legal_papers'] = $paper;
+        }
+        $model = $this->model->newInstance($input);
+
+        $model->save();
+
+        return $model;
+    }
+
+
+    public function update($input, $id)
+    {
+        $query = $this->model->newQuery();
+
+        $model = $query->findOrFail($id);
+
+        if($model->Legal_papers){
+            RemoveImageFromDisk('images'.DIRECTORY_SEPARATOR.$model->Legal_papers);
+        }
+
+        if(isset($input['Legal_papers']) && is_file($input['Legal_papers']))
+        {
+            $paper =  UploadImage('vendor',$input['Legal_papers']);
+            $input['Legal_papers'] = $paper;
+        }
+
+        $model->fill($input);
+
+        $model->save();
+
+        return $model;
+    }
+
+
+    public function delete($id)
+    {
+
+        $query = $this->model->newQuery();
+
+        $model = $query->findOrFail($id);
+        if($model->Legal_papers){
+            RemoveImageFromDisk('images'.DIRECTORY_SEPARATOR.$model->Legal_papers);
+        }
+
+        return $model->delete();
+    }
+
 }

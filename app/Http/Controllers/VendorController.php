@@ -51,9 +51,11 @@ class VendorController extends AppBaseController
      */
     public function store(CreateVendorRequest $request)
     {
+
+
         $input = $request->all();
 
-        $vendor = $this->vendorRepository->create($input);
+         $vendor = $this->vendorRepository->create($input);
 
         Flash::success('Vendor saved successfully.');
 

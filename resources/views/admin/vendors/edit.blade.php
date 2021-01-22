@@ -11,7 +11,7 @@
        <div class="box box-primary">
            <div class="box-body">
                <div class="row">
-                   {!! Form::model($vendor, ['route' => ['vendors.update', $vendor->id], 'method' => 'patch']) !!}
+                   {!! Form::model($vendor, ['route' => ['vendors.update', $vendor->id], 'method' => 'patch','files'=> true]) !!}
 
                         @include('admin.vendors.fields')
 
