@@ -70,7 +70,6 @@ class OrderRepository extends BaseRepository
 
     public function getVendorOrdersWaitingCount()
     {
-
         return Order::whereHas('Products',function (Builder $query) {
 
             $query->where('vendor_id',$this->currentUserVendor()->id);
@@ -100,7 +99,6 @@ class OrderRepository extends BaseRepository
     }
 
 
-
     public function getVendorOrderOnDeliveringCount()
     {
 
@@ -122,7 +120,6 @@ class OrderRepository extends BaseRepository
         })->where('status','complected')->count();
     }
 
-
     public function getVendorOrderCanceledCount()
     {
 
@@ -132,7 +129,6 @@ class OrderRepository extends BaseRepository
 
         })->where('status','canceled')->count();
     }
-
 
 
     /*
@@ -181,7 +177,6 @@ class OrderRepository extends BaseRepository
     {
         $orderProducts = $order->products()->where('vendor_id',$this->currentUserVendor()->id)->get();
 
-
         $productsAfterSale = $this->getProductsPrice($orderProducts);
 
         return collect($productsAfterSale)->sum('regular_price');
@@ -203,6 +198,7 @@ class OrderRepository extends BaseRepository
                 $productsBox [] = $this->calcSalePrice($product);
 
             } else{
+                $product->pivot->update(['price'=>$product->regular_price]);
 
                 $productsBox [] = $product;
             }
@@ -213,14 +209,18 @@ class OrderRepository extends BaseRepository
 
     private function calcSalePrice($product)
     {
+
         if($product->sale_percent != 0 || $product->sale_percent != null) {
 
           $newPrice =  $product->regular_price * $product->sale_percent / 100;
 
-          $product->regular_price = ( $product->regular_price - $newPrice);
+           $total = $product->regular_price = ( $product->regular_price - $newPrice);
+
+            $product->pivot->update(['price'=>$total]);
 
           return $product;
         }
+
         return $product;
     }
 

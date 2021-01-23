@@ -172,8 +172,4 @@ class OrderAPIController extends AppBaseController
         return $this->sendResponse($history,'orders retrieved successfully');
     }
 
-    public function products()
-    {
-        return $this->orderRepository->test();
-    }
 }

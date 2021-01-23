@@ -50,7 +50,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::get('orders-history', 'OrderAPIController@history');
 
-    Route::get('orders-products', 'OrderAPIController@products');
 
 });
 

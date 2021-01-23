@@ -105,6 +105,11 @@ class Product extends Model
         'brand' => 'required'
     ];
 
+
+    public function getPriceAttribute($q)
+    {
+        return $this->Pivot->price;
+    }
     public function Vendor()
     {
         return $this->belongsTo(Vendor::class,'vendor_id');
