@@ -4,12 +4,16 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\CreateVendorAPIRequest;
 use App\Http\Requests\API\UpdateVendorAPIRequest;
+use App\Http\Requests\BankRequest;
 use App\Models\Vendor;
 use App\Repositories\VendorRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Resources\VendorResource;
+use Illuminate\Support\Facades\Auth;
 use Response;
+use Tymon\JWTAuth\JWTAuth;
+
 
 /**
  * Class VendorController
@@ -58,7 +62,11 @@ class VendorAPIController extends AppBaseController
 
         $vendor = $this->vendorRepository->create($input);
 
-        return $this->sendResponse(new VendorResource($vendor), 'Vendor saved successfully');
+      if (!empty($this->vendorRepository->errors)) {
+         return $this->sendError($this->vendorRepository->errors);
+
+      }
+        return $this->sendResponse($vendor, 'Vendor saved successfully');
     }
 
     /**
@@ -128,5 +136,33 @@ class VendorAPIController extends AppBaseController
         $vendor->delete();
 
         return $this->sendSuccess('Vendor deleted successfully');
+    }
+
+    public function uploadLegal(Request $request)
+    {
+        $input = $request->all();
+
+        $this->vendorRepository->legal($input);
+
+        if(!empty($this->vendorRepository->errors)) {
+
+            return $this->sendError($this->vendorRepository->errors);
+        }
+        return $this->sendSuccess('Vendor legal uploaded successfully');
+    }
+
+
+    public function bank(BankRequest $request)
+    {
+        $input = $request->all();
+
+        $this->vendorRepository->UpdateUserBank($input);
+
+        if(!empty($this->vendorRepository->errors)) {
+
+            return $this->sendError($this->vendorRepository->errors);
+        }
+
+        return $this->sendSuccess('bank added successfully');
     }
 }

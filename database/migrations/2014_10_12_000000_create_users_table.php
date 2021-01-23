@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->string('gmail_id')->nullable();
             $table->string('twitter_id')->nullable();
             $table->string('email_code')->nullable();
-            $table->string('phone',15)->unique();
+            $table->string('phone',15)->unique()->nullable();
             $table->enum('phone_verified',['true','false'])->nullable();
             $table->string('password');
             $table->enum('role',['user','seller','admin'])->default('user');

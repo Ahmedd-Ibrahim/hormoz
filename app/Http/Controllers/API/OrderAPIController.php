@@ -4,11 +4,13 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\CreateOrderAPIRequest;
 use App\Http\Requests\API\UpdateOrderAPIRequest;
+use App\Http\Resources\OrderCountResource;
 use App\Models\Order;
 use App\Repositories\OrderRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Resources\OrderResource;
+//use Matrix\Builder;
 use Response;
 
 /**
@@ -128,5 +130,50 @@ class OrderAPIController extends AppBaseController
         $order->delete();
 
         return $this->sendSuccess('Order deleted successfully');
+    }
+
+    public function count()
+    {
+        $data['total'] =  $this->orderRepository->getVendorOrdersTotalCount();
+
+        $data['waiting'] = $this->orderRepository->getVendorOrdersWaitingCount();
+
+        $data['preparing'] = $this->orderRepository->getVendorOrderPreparingCount();
+
+        $data['waiting_delivery'] =  $this->orderRepository->getVendorOrderWaitDeliveryCount();
+
+        $data['on_delivery'] = $this->orderRepository->getVendorOrderOnDeliveringCount();
+
+        $data['completed'] =  $this->orderRepository->getVendorOrderComplectedCount();
+
+        $data['canceled'] =  $this->orderRepository->getVendorOrderCanceledCount();
+
+        if(!empty($this->orderRepository->error)) {
+            return $this->sendError($this->orderRepository->error);
+        }
+
+        return $this->sendResponse($data,'counts retrieved successfully');
+
+    }
+
+    public function history()
+    {
+        $history = $this->orderRepository->vendorOrderHistory();
+
+        if(empty($history)) {
+
+            return $this->sendError('No orders Yet');
+
+        }elseif (!empty($this->orderRepository->error)) {
+
+            return $this->sendError($this->orderRepository->error);
+        }
+
+        return $this->sendResponse($history,'orders retrieved successfully');
+    }
+
+    public function products()
+    {
+        return $this->orderRepository->test();
     }
 }

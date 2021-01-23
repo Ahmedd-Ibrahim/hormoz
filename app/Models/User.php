@@ -23,7 +23,6 @@ class User extends Model
     public $table = 'users';
 
 
-
     protected $hidden = ['password','pivot'];
 
     public $fillable = [

@@ -53,10 +53,10 @@ class Address extends Model
     protected $casts = [
         'id' => 'integer',
         'user_id' => 'integer',
-        'first_name' => 'integer',
-        'last_name' => 'integer',
-        'city' => 'integer',
-        'street' => 'integer',
+        'first_name' => 'string',
+        'last_name' => 'string',
+        'city' => 'string',
+        'street' => 'string',
         'building_number' => 'integer',
         'apartment_number' => 'integer',
         'phone' => 'string',
@@ -85,6 +85,11 @@ class Address extends Model
     public function User()
     {
         return $this->belongsTo(User::class,'user_id');
+    }
+
+    public function orders()
+    {
+        return $this->hasMany(Order::class,'address_id');
     }
 
 

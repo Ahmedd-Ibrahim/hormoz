@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\CreateUserAPIRequest;
 use App\Http\Requests\API\UpdateUserAPIRequest;
+use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
@@ -141,48 +142,50 @@ class UserAPIController extends AppBaseController
         return $this->sendSuccess('User deleted successfully');
     }
 
-
-    public function authenticate(Request $request)
+    /*
+     * login form
+     * @return instance of user & token
+     * */
+    public function login(Request $request)
     {
-        $credentials = $request->only('phone', 'password');
-
+        $credentials = $request->only('email', 'password');
         try {
             if (! $token = JWTAuth::attempt($credentials)) {
-                return response()->json(['error' => 'invalid_credentials'], 400);
+                return $this->sendError('invalid_credentials',400);
             }
         } catch (JWTException $e) {
-            return response()->json(['error' => 'could_not_create_token'], 500);
+                return response()->json(['error' => 'could_not_create_token'], 500);
         }
-//        $user = User::where('phone',$request->phone)->get();
-//        $data = ['user' => $user,'token'=>$token];
-        $user = User::where('phone',$request->phone)->first();
-        $data = [$user,['token'=>$token]];
-        return $this->sendResponse($data, 'User crossed successfully');
-//        return response()->json(compact('token'));
-    }
+        $user = User::where('email',$request->email)->first();
+        $user['token'] =  $token;
+        return $this->sendResponse(new UserResource($user,$token), 'User crossed successfully');
 
+    }
 
     public function register(Request $request)
     {
         $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
-            'phone' => 'required|max:255|unique:users',
+            'email' => 'required|max:255|unique:users',
             'password' => 'required|string|min:6|confirmed',
+            'role' => 'required|string|in:user,seller',
         ]);
 
         if($validator->fails()){
-            return response()->json($validator->errors()->toJson(), 400);
+            return $this->sendError($validator->errors(),400);
         }
 
         $user = \App\User::create([
             'name' => $request->get('name'),
-            'phone' => $request->get('phone'),
+            'email' => $request->get('email'),
+            'role' => $request->get('role'),
             'password' => Hash::make($request->get('password')),
         ]);
 
         $token = JWTAuth::fromUser($user);
-        $data = ['user_data'=>$user,'token'=>$token];
-        return $this->sendResponse($data, 'User crossed successfully');
+        $user['token'] = $token;
+//        $data = ['user_data'=>$user,'token'=>$token];
+        return $this->sendResponse(new UserResource($user), 'User crossed successfully');
 
 //        return response()->json(compact('user','token'),201);
     }

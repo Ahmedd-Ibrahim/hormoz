@@ -20,7 +20,7 @@ class CreateOrdersTable extends Migration
             $table->integer('address_id')->unsigned();
             $table->integer('order_number');
             $table->float('total');
-            $table->enum('status',['waiting','preparing','wait_delivery','delivering','complected']);
+            $table->enum('status',['waiting','preparing','wait_delivery','delivering','complected','canceled']);
             $table->timestamps();
             $table->softDeletes();
         });

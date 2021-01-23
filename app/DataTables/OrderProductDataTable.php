@@ -18,7 +18,7 @@ class OrderProductDataTable extends DataTable
     {
         $dataTable = new EloquentDataTable($query);
 
-        return $dataTable->addColumn('action', 'order_products.datatables_actions');
+        return $dataTable->addColumn('action', 'admin.order_products.datatables_actions');
     }
 
     /**

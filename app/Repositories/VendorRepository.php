@@ -4,6 +4,10 @@ namespace App\Repositories;
 
 use App\Models\Vendor;
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Validator;
+use Tymon\JWTAuth\Facades\JWTAuth;
+
 
 /**
  * Class VendorRepository
@@ -16,11 +20,13 @@ class VendorRepository extends BaseRepository
     /**
      * @var array
      */
+    public $errors = [];
+
     protected $fieldSearchable = [
         'user_id',
         'email',
         'name',
-        'offcial_name',
+        'official_name',
         'phone',
         'address',
         'Legal_papers',
@@ -55,12 +61,22 @@ class VendorRepository extends BaseRepository
 
     public function create($input)
     {
+        if(Auth::guard('api')->user()) {
 
-        if(isset($input['Legal_papers']) && is_file($input['Legal_papers']))
-        {
-          $paper =  UploadImage('vendor',$input['Legal_papers']);
+            if ($this->checkVendorCount($this->getCurrentUser()) != 0) {
+                return  $this->errors = 'can not has more than one vendor';
+            }
+
+            $input['user_id'] = $this->getCurrentUser()->id;
+        }
+
+        if(isset($input['Legal_papers']) && is_file($input['Legal_papers'])) {
+
+            $paper =  UploadImage('vendor',$input['Legal_papers']);
+
             $input['Legal_papers'] = $paper;
         }
+
         $model = $this->model->newInstance($input);
 
         $model->save();
@@ -105,5 +121,71 @@ class VendorRepository extends BaseRepository
 
         return $model->delete();
     }
+    /*
+     * complete vendor profile upload legal
+     * @return boolean
+     * */
+    public function legal($input)
+    {
+        $validator = Validator::make($input, [
 
+            'Legal_papers' => 'required|file|mimes:pdf,jpg,png',
+        ]);
+
+        if($validator->fails()){
+
+            return $this->errors = $validator->errors();
+        }
+
+        if(isset($input['Legal_papers']) && is_file($input['Legal_papers'])) {
+
+            $paper =  UploadImage('vendor',$input['Legal_papers']);
+
+            $input['Legal_papers'] = $paper;
+        }else{
+
+            return $this->errors = 'something Wrong check form Conditions!';
+        }
+
+        return $this->getCurrentUser()->Vendors()->first()->update($input);
+    }
+
+    /*
+     * update user bank
+     *
+     * @return boolean
+     *
+     * */
+
+    public function UpdateUserBank($input)
+    {
+        $user = $this->getCurrentUser();
+        if (!$user) {
+            return $this->errors = 'User not found';
+        }
+       return $user->Vendors()->first()->update($input);
+    }
+    /*
+     * get vendors of user count
+     *
+     * @return integer
+     *
+     * */
+    private function checkVendorCount($user)
+    {
+        return $user->Vendors()->count();
+    }
+
+    /*
+     * get current user
+     *
+     * @return instance of user
+     * */
+    private function getCurrentUser()
+    {
+        if(Auth::guard('api')) {
+            return   JWTAuth::toUser(JWTAuth::getToken());
+        }
+        return Auth::user();
+    }
 }

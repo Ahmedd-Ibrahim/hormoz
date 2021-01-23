@@ -18,13 +18,12 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  */
 class Order extends Model
 {
-    use SoftDeletes;
+//    use SoftDeletes;
 
     public $table = 'orders';
 
 
-    protected $dates = ['deleted_at'];
-
+//    protected $dates = ['deleted_at'];
 
 
     public $fillable = [
@@ -69,7 +68,12 @@ class Order extends Model
 
     public function Products()
     {
-        return $this->belongsToMany(Order::class,'order_products');
+        return $this->belongsToMany(Product::class,'order_products')->withPivot('id','price');
+    }
+
+    public function Address()
+    {
+        return $this->belongsTo(Address::class,'address_id');
     }
 
 }

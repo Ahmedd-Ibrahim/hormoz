@@ -121,11 +121,11 @@ class Product extends Model
 
     public function Users()
     {
-        return $this->belongsToMany(Product::class,'user_product','user_id');
+        return $this->belongsToMany(Product::class,'user_products','user_id');
     }
 
     public function Orders()
     {
-        return $this->belongsToMany(Order::class,'order_products');
+        return $this->belongsToMany(Order::class,'order_products')->withPivot('id','price');
     }
 }

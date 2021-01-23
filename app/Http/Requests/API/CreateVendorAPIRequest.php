@@ -24,6 +24,8 @@ class CreateVendorAPIRequest extends APIRequest
      */
     public function rules()
     {
-        return Vendor::$rules;
+        $roles = Vendor::$rules;
+        $roles['user_id'] = 'sometimes';
+        return $roles;
     }
 }
