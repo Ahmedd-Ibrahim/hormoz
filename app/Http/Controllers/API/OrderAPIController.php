@@ -5,6 +5,8 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\API\CreateOrderAPIRequest;
 use App\Http\Requests\API\UpdateOrderAPIRequest;
 use App\Http\Resources\OrderCountResource;
+use App\Http\Resources\singleOrderProductsResource;
+use App\Http\Resources\singleOrderResource;
 use App\Models\Order;
 use App\Repositories\OrderRepository;
 use Illuminate\Http\Request;
@@ -171,5 +173,39 @@ class OrderAPIController extends AppBaseController
 
         return $this->sendResponse($history,'orders retrieved successfully');
     }
+
+    public function singleOrder($id)
+    {
+        $order = $this->orderRepository->getSingleOrderById($id);
+
+        if(empty($order)) {
+            return $this->sendError('order is Empty');
+        }elseif (!empty($this->orderRepository->error)) {
+            return $this->sendError($this->orderRepository->error);
+        }
+        return $this->sendResponse(new singleOrderResource($order),'order retrieved successfully');
+
+    }
+
+    public function getSingleOrderProducts($id)
+    {
+        $order = $this->orderRepository->getSingleOrderById($id);
+
+        $products = $this->orderRepository->getSingleOrderProducts($order);
+
+        if(empty($order) || empty($products)) {
+
+            return $this->sendError('order is Empty');
+
+        }elseif (!empty($this->orderRepository->error)) {
+
+            return $this->sendError($this->orderRepository->error);
+        }
+
+
+        return $this->sendResponse(singleOrderProductsResource::collection($products),'order retrieved successfully');
+    }
+
+
 
 }

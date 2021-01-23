@@ -151,6 +151,9 @@ class OrderRepository extends BaseRepository
         foreach ($orders as $order) {
 
             $orderBox[]  = [
+
+                'id'  => $order->id,
+
                'total' => $order->total = $this->getTotalPriceForEveryOrder($order),
 
                'address' => $order->total = $order->Address->city,
@@ -166,12 +169,32 @@ class OrderRepository extends BaseRepository
         return $orderBox;
     }
 
-    public function test()
+    /*
+     * get single order details
+     *
+     * @return instance
+     * */
+    public function getSingleOrderById($id)
     {
-        $orders = Order::first();
-
-        return $orders->Products()->updateExistingPivot(3,['price'=>30]);
+        $order = Order::find($id);
+        if(!$order) {
+            $this->error = 'order not found';
+            return $this->alertError();
+        }
+        return $order;
     }
+
+
+    public function getSingleOrderProducts($order)
+    {
+        if(!$order) {
+            $this->error = 'order not found';
+            return $this->alertError();
+        }
+
+      return  $order->products()->where('vendor_id',$this->currentUserVendor()->id)->get();
+    }
+
 
     private function getTotalPriceForEveryOrder($order)
     {
@@ -198,6 +221,7 @@ class OrderRepository extends BaseRepository
                 $productsBox [] = $this->calcSalePrice($product);
 
             } else{
+
                 $product->pivot->update(['price'=>$product->regular_price]);
 
                 $productsBox [] = $product;
@@ -252,10 +276,10 @@ class OrderRepository extends BaseRepository
         return $this->getCurrentUser()->Vendors()->first();
     }
 
+
     private function alertError()
     {
-        if(!empty($this->error))
-        {
+        if(!empty($this->error)) {
           return  $this->error;
         }
     }

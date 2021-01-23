@@ -50,10 +50,11 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::get('orders-history', 'OrderAPIController@history');
 
+    Route::get('orders-single/{id}', 'OrderAPIController@singleOrder');
+
+    Route::get('orders-single-products/{id}', 'OrderAPIController@getSingleOrderProducts');
 
 });
-
-
 
 Route::resource('credits', 'CreditAPIController');
 
@@ -66,7 +67,6 @@ Route::resource('categories', 'CategoryAPIController');
 Route::resource('sub_categories', 'SubCategoryAPIController');
 
 Route::resource('galleries', 'GalleryAPIController');
-
 
 Route::resource('user_products', 'UserProductAPIController');
 
