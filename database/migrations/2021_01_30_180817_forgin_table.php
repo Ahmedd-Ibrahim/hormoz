@@ -72,6 +72,17 @@ class ForginTable extends Migration
             $table->foreign('product_id')->on('products')->references('id')
                 ->onDelete('cascade')->onUpdate('cascade');
         });
+
+
+
+        Schema::table('favorites', function (Blueprint $table) {
+            $table->foreign('user_id')->on('users')->references('id')
+                ->onUpdate('cascade')->onDelete('cascade');
+
+            $table->foreign('product_id')->on('products')->references('id')
+                ->onUpdate('cascade')->onDelete('cascade');
+        });
+
     }
 
     /**
@@ -126,6 +137,13 @@ class ForginTable extends Migration
         Schema::table('order_products', function(Blueprint $table) {
             $table->dropForeign('order_products_order_id_foreign');
             $table->dropForeign('order_products_product_id_foreign');
+
+        });
+
+
+        Schema::table('favorites', function (Blueprint $table) {
+            $table->dropForeign('favorites_user_id_foreign');
+            $table->dropForeign('favorites_product_id_foreign');
 
         });
 

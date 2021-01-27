@@ -4,7 +4,9 @@ namespace App\Repositories;
 
 use App\Models\User;
 use App\Repositories\BaseRepository;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 /**
  * Class UserRepository
@@ -67,4 +69,34 @@ class UserRepository extends BaseRepository
         return $model;
     }
 
+    public function getUserInfo()
+    {
+        return $this->getCurrentUser();
+    }
+
+
+    public function updateProfile($input)
+    {
+       if(Auth::guard('api')->user()) {
+           $user = $this->getCurrentUser();
+           $user->update($input);
+           return $user;
+       }
+    }
+
+    private function getCurrentUser()
+    {
+        if(Auth::guard('api')) {
+            return   JWTAuth::toUser(JWTAuth::getToken());
+        }
+        return Auth::user();
+    }
+
+
+    private function alertError()
+    {
+        if(!empty($this->errors)) {
+            return  $this->errors;
+        }
+    }
 }

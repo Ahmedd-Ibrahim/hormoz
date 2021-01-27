@@ -23,7 +23,7 @@ class User extends Authenticatable implements JWTSubject
      * @var array
      */
     protected $fillable = [
-        'name', 'phone', 'password','role','email'
+        'name', 'phone', 'password','role','email','birth_day','gender'
     ];
 
     /**
@@ -67,6 +67,12 @@ class User extends Authenticatable implements JWTSubject
 
     public function Products()
     {
-        return $this->belongsToMany(Product::class,'user_product','product_id');
+        return $this->belongsToMany(Product::class,'user_products');
+    }
+
+
+    public function ProductFavorites()
+    {
+        return $this->belongsToMany(Product::class,'favorites');
     }
 }

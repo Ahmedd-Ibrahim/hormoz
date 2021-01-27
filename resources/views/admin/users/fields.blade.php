@@ -30,6 +30,20 @@
 </div>
 
 
+<!-- Role Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('gender', 'Gender:') !!}
+    {!! Form::select('gender', ['male'=>'male','female'=>'female'],null, ['class' => 'form-control']) !!}
+</div>
+
+
+<!-- Role Field -->
+<div class="form-group col-sm-6">
+    {!! Form::label('birth_day', 'birth_day:') !!}
+    {!! Form::date('birth_day',null, ['class' => 'form-control']) !!}
+</div>
+
+
 <!-- Submit Field -->
 <div class="form-group col-sm-12">
     {!! Form::submit('Save', ['class' => 'btn btn-primary']) !!}

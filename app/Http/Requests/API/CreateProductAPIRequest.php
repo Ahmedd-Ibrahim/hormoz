@@ -24,6 +24,15 @@ class CreateProductAPIRequest extends APIRequest
      */
     public function rules()
     {
-        return Product::$rules;
+        $rules = Product::$rules;
+
+        $rules['vendor_id'] = 'sometimes';
+
+        $rules['code'] = 'sometimes';
+
+        $rules['status'] = 'sometimes';
+
+
+        return $rules;
     }
 }

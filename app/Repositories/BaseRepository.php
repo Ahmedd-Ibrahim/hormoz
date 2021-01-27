@@ -4,6 +4,7 @@ namespace App\Repositories;
 
 use Illuminate\Container\Container as Application;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\Auth;
 
 
 abstract class BaseRepository
@@ -190,4 +191,5 @@ abstract class BaseRepository
 
         return $model->delete();
     }
+
 }

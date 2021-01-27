@@ -70,6 +70,8 @@ class UserDataTable extends DataTable
             'phone' =>  new Column(['title' => __('users.phone:'), 'data' => 'phone']),
             'role' =>  new Column(['title' => __('users.role:'), 'data' => 'role', 'searchable' => true]),
             'email' =>  new Column(['title' => __('users.email:'), 'data' => 'email', 'searchable' => true]),
+            'gender' =>  new Column(['title' => __('users.gender:'), 'data' => 'gender', 'searchable' => true]),
+            'birth_day' =>  new Column(['title' => __('users.birth_day:'), 'data' => 'birth_day', 'searchable' => true]),
             'created_at' => new Column(['title' => __('users.created_at:'), 'data' => 'created_at', 'searchable' => false]),
             'updated_at' => new Column(['title' => __('users.updated_at:'), 'data' => 'updated_at', 'searchable' => false])
         ];

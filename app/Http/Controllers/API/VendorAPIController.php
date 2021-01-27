@@ -165,4 +165,17 @@ class VendorAPIController extends AppBaseController
 
         return $this->sendSuccess('bank added successfully');
     }
+
+    public function totalBalance()
+    {
+        $total = $this->vendorRepository->getTotalBalance();
+
+        if(empty($total)) {
+            return $this->sendError('No Balance yet');
+        } elseif (!empty($this->vendorRepository->errors)) {
+            return $this->sendError($this->vendorRepository->errors);
+        }
+
+        return $this->sendResponse($total,'Balance retrieved successfully');
+    }
 }

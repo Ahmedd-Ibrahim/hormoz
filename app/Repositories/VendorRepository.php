@@ -165,6 +165,17 @@ class VendorRepository extends BaseRepository
         }
        return $user->Vendors()->first()->update($input);
     }
+
+    public function getTotalBalance()
+    {
+        return  $this->getCurrentUser()->Vendors()->select('id','total','holding','available')->first();
+    }
+
+
+    public function getHoldingBalance()
+    {
+        return $this->currentUserVendor()->holding;
+    }
     /*
      * get vendors of user count
      *
@@ -175,6 +186,26 @@ class VendorRepository extends BaseRepository
     {
         return $user->Vendors()->count();
     }
+
+    private function currentUserVendor()
+    {
+        if(!$this->getCurrentUser()) {
+
+            $this->error = 'user must login';
+
+            return $this->alertError();
+
+        } elseif (!$this->getCurrentUser()->has('Vendors')) {
+
+            $this->error = 'user must have at lest one vendor';
+
+            return $this->alertError();
+
+        }
+
+        return $this->getCurrentUser()->Vendors()->first();
+    }
+
 
     /*
      * get current user
@@ -188,4 +219,13 @@ class VendorRepository extends BaseRepository
         }
         return Auth::user();
     }
+
+
+    private function alertError()
+    {
+        if(!empty($this->error)) {
+            return  $this->error;
+        }
+    }
+
 }

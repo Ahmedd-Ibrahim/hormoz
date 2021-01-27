@@ -53,3 +53,15 @@
     <a href="{{ route('orderProducts.index') }}"><i class="fa fa-edit"></i><span>Order Products</span></a>
 </li>
 
+
+
+<li class="{{ Request::is('*mailings*') ? 'active' : '' }}">
+    <a href="{{ route('mailings.index') }}"><i class="fa fa-edit"></i><span>mailings</span></a>
+</li>
+
+
+
+<li class="{{ Request::is('*favorites*') ? 'active' : '' }}">
+    <a href="{{ route('favorites.index') }}"><i class="fa fa-edit"></i><span>Favorites</span></a>
+</li>
+

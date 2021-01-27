@@ -4,11 +4,14 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\CreateProductAPIRequest;
 use App\Http\Requests\API\UpdateProductAPIRequest;
+use App\Http\Resources\homeProductsResource;
+use App\Http\Resources\VendorProductsResource;
 use App\Models\Product;
 use App\Repositories\ProductRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 use App\Http\Resources\ProductResource;
+use Illuminate\Database\Eloquent\Builder;
 use Response;
 
 /**
@@ -128,5 +131,94 @@ class ProductAPIController extends AppBaseController
         $product->delete();
 
         return $this->sendSuccess('Product deleted successfully');
+    }
+
+
+    public function allProducts()
+    {
+        $products = $this->productRepository->getAllProductsForCurrentVendor();
+
+        if(empty($products)) {
+
+            return $this->sendError('No Products Yet');
+
+        } elseif (!empty($this->productRepository->error)) {
+
+            return $this->sendError($this->productRepository->error);
+        }
+
+        return  $this->sendResponse(VendorProductsResource::collection($products),'Product retrieved successfully');
+    }
+
+    public function simCards()
+    {
+        $simProducts = Product::whereHas('category',function (Builder $q){
+            $q->where('name','like','%sim%')->where('status','active');
+        })->select('id','name','regular_price')->paginate(10);
+
+        if(empty($simProducts) || $simProducts->count() < 1) {
+
+            return $this->sendError('No products on this category Yet');
+        }
+
+        return  $this->sendResponse($simProducts,'Product retrieved successfully');
+    }
+
+
+
+    public function card()
+    {
+        $simProducts = Product::whereHas('category',function (Builder $q){
+            $q->where('name','like','%card%')->where('status','active');
+        })->select('id','name','regular_price')->paginate(10);
+
+        if(empty($simProducts) || $simProducts->count() < 1) {
+
+            return $this->sendError('No products on this category Yet');
+        }
+
+        return  $this->sendResponse($simProducts,'Product retrieved successfully');
+    }
+
+    public function elect()
+    {
+        $simProducts = Product::whereHas('category',function (Builder $q){
+            $q->where('name','like','%elect%')->where('status','active');
+        })->select('id','name','regular_price')->paginate(10);
+
+        if(empty($simProducts) || $simProducts->count() < 1) {
+
+            return $this->sendError('No products on this category Yet');
+        }
+
+        return  $this->sendResponse($simProducts,'Product retrieved successfully');
+    }
+
+
+    public function pc()
+    {
+        $simProducts = Product::whereHas('category',function (Builder $q){
+            $q->where('name','like','%computer%')->where('status','active');
+        })->select('id','name','regular_price')->paginate(10);
+
+        if(empty($simProducts) || $simProducts->count() < 1) {
+
+            return $this->sendError('No products on this category Yet');
+        }
+
+        return  $this->sendResponse($simProducts,'Product retrieved successfully');
+    }
+
+
+    public function slide()
+    {
+        $simProducts = Product::where('slide','true')->select('id','name','catching_word','regular_price')->paginate(3);
+
+        if(empty($simProducts) || $simProducts->count() < 1) {
+
+            return $this->sendError('No products on this category Yet');
+        }
+
+        return  $this->sendResponse($simProducts,'Product retrieved successfully');
     }
 }

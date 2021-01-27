@@ -24,6 +24,8 @@ class CreateUsersTable extends Migration
             $table->enum('phone_verified',['true','false'])->nullable();
             $table->string('password');
             $table->enum('role',['user','seller','admin'])->default('user');
+            $table->enum('gender',['male','female'])->default('male');
+            $table->date('birth_day')->nullable();
             $table->string('email')->unique()->nullable();
             $table->timestamp('email_verified_at')->nullable();
             $table->rememberToken();

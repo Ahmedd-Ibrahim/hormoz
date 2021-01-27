@@ -41,7 +41,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::post('vendors/bank', 'VendorAPIController@bank');
 
-
 //    orders dashboard
 
     Route::resource('orders', 'OrderAPIController');
@@ -54,20 +53,63 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::get('orders-single-products/{id}', 'OrderAPIController@getSingleOrderProducts');
 
+//    products on dashboard
+
+    Route::get('products-dashboard', 'ProductAPIController@allProducts');
+
+//    Vendor Balance
+    Route::get('vendors-balance', 'VendorAPIController@totalBalance');
+
+    Route::get('vendors-orders-history', 'OrderAPIController@vendorOrdersHistory');
+
+//    vendor home
+
+    Route::get('home-info', 'OrderAPIController@home');
+
+    Route::get('home-waiting-orders', 'OrderAPIController@homeWainingOrders');
+
+    Route::get('home-fast-info', 'OrderAPIController@fastInfo');
+
+    Route::resource('galleries', 'GalleryAPIController');
+
+//    user Card
+
+    Route::resource('user_products', 'UserProductAPIController');
+
+    Route::get('user_products-reduce/{id}', 'UserProductAPIController@reduce');
+
+//    user profile
+
+    Route::get('user-profile', 'UserAPIController@profile');
+
+    Route::post('user-profile', 'UserAPIController@updateProfile');
+
+    Route::resource('favorites', 'FavoriteAPIController')->only(['destroy','store','index']);
+
+    Route::resource('sub_categories', 'SubCategoryAPIController');
+
+    Route::resource('order_products', 'OrderProductAPIController');
+
+    Route::resource('credits', 'CreditAPIController');
+
+    Route::resource('addresses', 'AddressAPIController');
 });
 
-Route::resource('credits', 'CreditAPIController');
-
-Route::resource('addresses', 'AddressAPIController');
-
-Route::resource('products', 'ProductAPIController');
+// phone
 
 Route::resource('categories', 'CategoryAPIController');
 
-Route::resource('sub_categories', 'SubCategoryAPIController');
+Route::resource('products', 'ProductAPIController');
 
-Route::resource('galleries', 'GalleryAPIController');
+Route::get('products-sim', 'ProductAPIController@simCards');
 
-Route::resource('user_products', 'UserProductAPIController');
+Route::get('products-card', 'ProductAPIController@card');
 
-Route::resource('order_products', 'OrderProductAPIController');
+Route::get('products-elect', 'ProductAPIController@elect');
+
+Route::get('products-pc', 'ProductAPIController@pc');
+
+Route::get('products-slide', 'ProductAPIController@slide');
+
+Route::resource('mailings', 'mailingAPIController');
+

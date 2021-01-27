@@ -51,6 +51,10 @@ Route::get('test',function (){
 
         Route::resource('orderProducts', 'OrderProductController');
 
+        Route::resource('mailings', 'mailingController');
+
+
+        Route::resource('favorites', 'FavoriteController');
     });
 
 
@@ -65,9 +69,6 @@ Auth::routes(['verify' => true]);
 
 // Infyom Routes
 Route::group(['middleware'=>'user.role:admin'],function (){
-
-
-
 
 
     Route::get('generator_builder', '\InfyOm\GeneratorBuilder\Controllers\GeneratorBuilderController@builder')->name('io_generator_builder');
@@ -86,6 +87,9 @@ Route::group(['middleware'=>'user.role:admin'],function (){
     )->name('io_generator_builder_generate_from_file');
 
 }); // End of Infyom Routes
+
+
+
 
 
 

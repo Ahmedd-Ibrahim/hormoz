@@ -40,6 +40,7 @@ class Product extends Model
 
 
     public $fillable = [
+        'id',
         'vendor_id',
         'name',
         'category_id',
@@ -55,7 +56,8 @@ class Product extends Model
         'catching_word',
         'code',
         'status',
-        'brand'
+        'brand',
+        'slide',
     ];
 
     /**
@@ -126,11 +128,21 @@ class Product extends Model
 
     public function Users()
     {
-        return $this->belongsToMany(Product::class,'user_products','user_id');
+        return $this->belongsToMany(Product::class,'user_products');
     }
 
     public function Orders()
     {
         return $this->belongsToMany(Order::class,'order_products')->withPivot('id','price');
+    }
+
+    public function Galleries()
+    {
+        return $this->hasMany(Gallery::class,'product_id');
+    }
+
+    public function UserFavorites()
+    {
+        return $this->belongsToMany(User::class,'favorites');
     }
 }

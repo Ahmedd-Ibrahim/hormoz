@@ -5,6 +5,8 @@ namespace App\Repositories;
 use App\Models\Order;
 use App\Models\Product;
 use App\Repositories\BaseRepository;
+use Carbon\Traits\Date;
+use Illuminate\Support\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Database\Eloquent\Builder;
 use Matrix\Exception;
@@ -156,13 +158,13 @@ class OrderRepository extends BaseRepository
 
                'total' => $order->total = $this->getTotalPriceForEveryOrder($order),
 
-               'address' => $order->total = $order->Address->city,
+               'address' => $order->Address->city,
 
                'order_number' => $order->order_number,
 
                'created_at' => $order->created_at,
 
-               'order_status' => $order->order_status,
+               'order_status' => $order->status,
             ];
         }
 
@@ -195,6 +197,46 @@ class OrderRepository extends BaseRepository
       return  $order->products()->where('vendor_id',$this->currentUserVendor()->id)->get();
     }
 
+
+    public function totalProductsCountFromCompletedOrders()
+    {
+        $vendor = $this->currentUserVendor();
+
+        return Product::where('vendor_id',$vendor->id)->whereHas('orders',function (Builder $q){
+            $q->where('status','completed');
+        })->count();
+
+    }
+
+
+    public function WainingOrders()
+    {
+        return Order::whereHas('Products',function (Builder $q){
+
+            $q->where('vendor_id',$this->currentUserVendor()->id);
+
+        })->where('status','waiting')->get();
+    }
+
+    public function newOrders()
+    {
+        return Order::whereHas('Products',function (Builder $q){
+
+            $q->where('vendor_id',$this->currentUserVendor()->id);
+
+        })->whereDate('created_at',Carbon::today())->count();
+
+    }
+
+    public function ProductsWillOutOfStock()
+    {
+        return Product::where('vendor_id',$this->currentUserVendor()->id)->where('stock','<=',2)->count();
+    }
+
+    public function ProductsOutOfStock()
+    {
+        return Product::where('vendor_id',$this->currentUserVendor()->id)->where('stock',0)->count();
+    }
 
     private function getTotalPriceForEveryOrder($order)
     {
@@ -246,6 +288,12 @@ class OrderRepository extends BaseRepository
         }
 
         return $product;
+    }
+
+
+    public function userName()
+    {
+        return $this->getCurrentUser()->name;
     }
 
 

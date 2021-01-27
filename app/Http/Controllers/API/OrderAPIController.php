@@ -202,10 +202,105 @@ class OrderAPIController extends AppBaseController
             return $this->sendError($this->orderRepository->error);
         }
 
-
         return $this->sendResponse(singleOrderProductsResource::collection($products),'order retrieved successfully');
     }
 
 
+    public function vendorOrdersHistory()
+    {
+        $history = $this->orderRepository->vendorOrderHistory();
+
+        if(empty($history)) {
+
+            return $this->sendError('No orders Yet');
+
+        }elseif (!empty($this->orderRepository->error)) {
+
+            return $this->sendError($this->orderRepository->error);
+        }
+
+        return $this->sendResponse($history,'orders retrieved successfully');
+    }
+
+    public function home()
+    {
+        $name = $this->orderRepository->userName();
+
+        $totalOrders = $this->orderRepository->getVendorOrdersTotalCount();
+
+        $totalProductsCount = $this->orderRepository->totalProductsCountFromCompletedOrders();
+
+        if(empty($name)) {
+
+            return $this->sendError('Need to login');
+
+        }elseif (!empty($this->orderRepository->error)) {
+
+            return $this->sendError($this->orderRepository->error);
+        }
+
+        $data = [
+            'username' => $name,
+            'totalOrders' => $totalOrders,
+            'productsSolid' => $totalProductsCount
+        ];
+
+        return $this->sendResponse($data,'orders retrieved successfully');
+    }
+
+    public function homeWainingOrders()
+    {
+        $orders = $this->orderRepository->WainingOrders();
+
+        if(empty($orders) || $orders->count() < 1 ) {
+
+            return $this->sendError('No Orders Yet');
+
+        }elseif (!empty($this->orderRepository->error)) {
+
+            return $this->sendError($this->orderRepository->error);
+        }
+
+        return $this->sendResponse(OrderResource::collection($orders),'orders retrieved successfully');
+    }
+
+    public function fastInfo()
+    {
+        $newOrders =  $this->orderRepository->newOrders();
+
+        $waitingOrdersCount =  $this->orderRepository->WainingOrders();
+
+        $waitingCount = $waitingOrdersCount->count();
+
+        $preparing = $this->orderRepository->getVendorOrderPreparingCount();
+
+        $productsWillOutOfStuck = $this->orderRepository->ProductsWillOutOfStock();
+
+        $productsOutOfStock = $this->orderRepository->ProductsOutOfStock();
+
+
+        if(!empty($this->orderRepository->error)) {
+
+            return $this->sendError($this->orderRepository->error);
+        }
+
+        $data = [
+
+            'new orders ' => $newOrders,
+
+            'waiting ' => $waitingCount,
+
+            'preparing ' => $preparing,
+
+            'productsWillOutOfStuck ' => $productsWillOutOfStuck,
+
+            'productsOutOfStock ' => $productsOutOfStock,
+
+
+        ];
+
+        return $this->sendResponse($data,'orders retrieved successfully');
+
+    }
 
 }

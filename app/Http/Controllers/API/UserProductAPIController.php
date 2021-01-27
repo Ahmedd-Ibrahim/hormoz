@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\CreateUserProductAPIRequest;
 use App\Http\Requests\API\UpdateUserProductAPIRequest;
+use App\Models\Product;
 use App\Models\UserProduct;
 use App\Repositories\UserProductRepository;
 use Illuminate\Http\Request;
@@ -35,13 +36,21 @@ class UserProductAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $userProducts = $this->userProductRepository->all(
-            $request->except(['skip', 'limit']),
-            $request->get('skip'),
-            $request->get('limit')
-        );
+        $products = $this->userProductRepository->card();
+        if(empty($products) || !empty($this->userProductRepository->errors)) {
+            return $this->sendError('No Products on this card');
+        }
 
-        return $this->sendResponse(UserProductResource::collection($userProducts), 'User Products retrieved successfully');
+        // collect the resource to get total price of all
+        $collection = collect(UserProductResource::collection($products));
+
+        $data = [
+            'products'  => UserProductResource::collection($products),
+            'total'     => $collection->sum('total'),
+            'total_after_sale' => $collection->sum('total_after_sale')
+        ];
+
+        return $this->sendResponse($data, 'User Products retrieved successfully');
     }
 
     /**
@@ -58,7 +67,11 @@ class UserProductAPIController extends AppBaseController
 
         $userProduct = $this->userProductRepository->create($input);
 
-        return $this->sendResponse(new UserProductResource($userProduct), 'User Product saved successfully');
+        if(empty($userProduct) || !empty($this->userProductRepository->errors)) {
+            return $this->sendError($this->userProductRepository->errors);
+        }
+
+        return $this->sendResponse($userProduct, 'User Product saved successfully');
     }
 
     /**
@@ -119,14 +132,26 @@ class UserProductAPIController extends AppBaseController
     public function destroy($id)
     {
         /** @var UserProduct $userProduct */
-        $userProduct = $this->userProductRepository->find($id);
+        $userProduct = $this->userProductRepository->delete($id);
 
         if (empty($userProduct)) {
             return $this->sendError('User Product not found');
         }
 
-        $userProduct->delete();
+        return $this->sendSuccess('User Product deleted successfully from Cart');
+    }
 
-        return $this->sendSuccess('User Product deleted successfully');
+
+    public function reduce($id)
+    {
+         $product = $this->userProductRepository->reduceProductFromCart($id);
+
+         if(empty($product)) {
+             return $this->sendError('This Product Not found in The cart');
+         } elseif (!empty($this->userProductRepository->errors)) {
+             return $this->sendError($this->userProductRepository->errors);
+         }
+
+         return $this->sendSuccess('Product Reduced successfully');
     }
 }

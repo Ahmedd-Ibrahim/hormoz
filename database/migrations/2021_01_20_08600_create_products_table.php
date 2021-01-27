@@ -31,6 +31,7 @@ class CreateProductsTable extends Migration
             $table->text('catching_word')->nullable();
             $table->text('code');
             $table->enum('status',['active','deactivate']);
+            $table->enum('slide',['true','false']);
             $table->text('brand')->nullable();
             $table->timestamps();
             $table->softDeletes();

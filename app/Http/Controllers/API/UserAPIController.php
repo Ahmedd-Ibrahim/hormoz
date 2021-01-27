@@ -4,12 +4,15 @@ namespace App\Http\Controllers\API;
 
 use App\Http\Requests\API\CreateUserAPIRequest;
 use App\Http\Requests\API\UpdateUserAPIRequest;
+use App\Http\Requests\API\UpdateUserInformation;
+use App\Http\Resources\UserInformationResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
 use App\Repositories\UserRepository;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AppBaseController;
 
+use League\CommonMark\Block\Element\ThematicBreak;
 use Response;
 
 use Tymon\JWTAuth\Exceptions\JWTException;
@@ -184,10 +187,7 @@ class UserAPIController extends AppBaseController
 
         $token = JWTAuth::fromUser($user);
         $user['token'] = $token;
-//        $data = ['user_data'=>$user,'token'=>$token];
         return $this->sendResponse(new UserResource($user), 'User crossed successfully');
-
-//        return response()->json(compact('user','token'),201);
     }
 
     public function forgetPassword(Request $request)
@@ -240,5 +240,31 @@ class UserAPIController extends AppBaseController
         return response()->json(['message' => 'Successfully logged out']);
 
     } // End of logout
+
+
+    public function profile()
+    {
+         $user = $this->userRepository->getUserInfo();
+
+         if (!$user) {
+             return $this->sendError('Need To Send token');
+         }
+
+         return $this->sendResponse(new UserInformationResource($user),'User Information received successfully');
+    }
+
+
+    public function updateProfile(UpdateUserInformation $request)
+    {
+        $input = $request->all();
+
+        $update = $this->userRepository->updateProfile($input);
+
+        if (!$update) {
+            return $this->sendError('Need To Send token');
+        }
+
+        return $this->sendResponse(new UserInformationResource($update),'User Information updated successfully');
+    }
 
 }

@@ -19,7 +19,6 @@ class singleOrderResource extends JsonResource
      */
     public function toArray($request)
     {
-
         return [
             'order_number' => $this->order_number,
             'total' => $this->total,
