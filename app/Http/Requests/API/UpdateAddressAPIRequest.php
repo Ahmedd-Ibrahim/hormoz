@@ -25,7 +25,17 @@ class UpdateAddressAPIRequest extends APIRequest
     public function rules()
     {
         $rules = Address::$rules;
-        
+
+        $rules['user_id'] = 'sometimes';
+        $rules['first_name'] = 'sometimes';
+        $rules['last_name'] = 'sometimes';
+        $rules['city'] = 'sometimes';
+        $rules['street'] = 'sometimes';
+        $rules['building_number'] = 'sometimes';
+        $rules['apartment_number'] = 'sometimes';
+        $rules['phone'] = 'sometimes';
+        $rules['type'] = 'sometimes';
+        $rules['description'] = 'sometimes';
         return $rules;
     }
 }

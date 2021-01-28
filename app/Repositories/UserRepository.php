@@ -19,6 +19,9 @@ class UserRepository extends BaseRepository
     /**
      * @var array
      */
+
+    public $errors;
+
     protected $fieldSearchable = [
         'name',
         'email',
@@ -82,6 +85,19 @@ class UserRepository extends BaseRepository
            $user->update($input);
            return $user;
        }
+    }
+
+    public function updatePass($input)
+    {
+
+        if(Hash::check($input['old_password'],$this->getCurrentUser()->password)) {
+            $user = $this->getCurrentUser();
+            $user->update(['password' => Hash::make($input['password'])]);
+            return 'done';
+        }
+
+        return $this->errors = 'password not matching';
+
     }
 
     private function getCurrentUser()

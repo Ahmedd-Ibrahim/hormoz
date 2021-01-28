@@ -24,6 +24,8 @@ class CreateAddressAPIRequest extends APIRequest
      */
     public function rules()
     {
-        return Address::$rules;
+        $rules =  Address::$rules;
+        $rules['user_id'] = 'sometimes';
+        return $rules;
     }
 }

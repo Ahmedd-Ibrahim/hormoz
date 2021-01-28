@@ -26,8 +26,6 @@ class AddressResource extends JsonResource
             'phone' => $this->phone,
             'type' => $this->type,
             'descriotion' => $this->descriotion,
-            'created_at' => $this->created_at,
-            'updated_at' => $this->updated_at
         ];
     }
 }

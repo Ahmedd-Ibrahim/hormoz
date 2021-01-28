@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Requests\API\CreateUserAPIRequest;
 use App\Http\Requests\API\UpdateUserAPIRequest;
 use App\Http\Requests\API\UpdateUserInformation;
+use App\Http\Requests\UpdatePasswordRequest;
 use App\Http\Resources\UserInformationResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -267,4 +268,19 @@ class UserAPIController extends AppBaseController
         return $this->sendResponse(new UserInformationResource($update),'User Information updated successfully');
     }
 
+
+    public function updatePassword(UpdatePasswordRequest $request)
+    {
+
+        $input = $request->all();
+        $update = $this->userRepository->updatePass($input);
+
+        if(empty($update)) {
+            return $this->sendError('Check requirement');
+        } elseif (!empty($this->userRepository->errors)) {
+            return $this->sendError($this->userRepository->errors);
+        }
+
+        return $this->sendSuccess('password Updated Successfully');
+    }
 }

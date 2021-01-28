@@ -82,9 +82,17 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::get('user-profile', 'UserAPIController@profile');
 
+    Route::post('user-profile-update-password', 'UserAPIController@updatePassword');
+
     Route::post('user-profile', 'UserAPIController@updateProfile');
 
     Route::resource('favorites', 'FavoriteAPIController')->only(['destroy','store','index']);
+
+//    address for users
+
+    Route::resource('addresses', 'AddressAPIController');
+
+    Route::post('addresses-update', 'AddressAPIController@updateAddress');
 
     Route::resource('sub_categories', 'SubCategoryAPIController');
 
@@ -92,7 +100,7 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::resource('credits', 'CreditAPIController');
 
-    Route::resource('addresses', 'AddressAPIController');
+
 });
 
 // phone

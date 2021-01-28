@@ -35,11 +35,12 @@ class AddressAPIController extends AppBaseController
      */
     public function index(Request $request)
     {
-        $addresses = $this->addressRepository->all(
-            $request->except(['skip', 'limit']),
-            $request->get('skip'),
-            $request->get('limit')
-        );
+//        $addresses = $this->addressRepository->all(
+//            $request->except(['skip', 'limit']),
+//            $request->get('skip'),
+//            $request->get('limit')
+//        );
+        $addresses = $this->addressRepository->getUserAddress();
 
         return $this->sendResponse(AddressResource::collection($addresses), 'Addresses retrieved successfully');
     }
@@ -92,7 +93,9 @@ class AddressAPIController extends AppBaseController
      */
     public function update($id, UpdateAddressAPIRequest $request)
     {
+
         $input = $request->all();
+
 
         /** @var Address $address */
         $address = $this->addressRepository->find($id);
@@ -104,6 +107,19 @@ class AddressAPIController extends AppBaseController
         $address = $this->addressRepository->update($input, $id);
 
         return $this->sendResponse(new AddressResource($address), 'Address updated successfully');
+    }
+
+
+    public function updateAddress(Request $request)
+    {
+        $input = $request->all();
+        $update = $this->addressRepository->updateAddress($input);
+
+        if(!empty($this->addressRepository->errors)) {
+            return $this->sendError($this->addressRepository->errors);
+        }
+
+        return  $this->sendResponse($update,'Address updated successfully');
     }
 
     /**
