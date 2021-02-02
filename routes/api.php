@@ -100,7 +100,6 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::resource('credits', 'CreditAPIController');
 
-
 });
 
 // phone
